@@ -18,6 +18,9 @@ namespace Memby.Data.Configurations
 
             entity.HasIndex(o => new { o.Email, o.Password })
                 .IsUnique();
+
+            entity.HasMany(o => o.UserProviders)
+                .WithOne(o => o.User);
         }
     }
 }

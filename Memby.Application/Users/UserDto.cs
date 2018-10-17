@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Memby.Core.Enums;
+using System;
 
-namespace Memby.Domain.Users
+namespace Memby.Application.Users
 {
-    public class User : Entity
+    public class UserDto
     {
         public string Email { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 
-        public int Gender { get; set; }
+        public Genders Gender { get; set; }
 
         public bool IsIndividualOffersEnabled { get; set; }
 
@@ -19,10 +19,6 @@ namespace Memby.Domain.Users
 
         public string Name { get; set; }
 
-        public string Password { get; set; }
-
         public string Surname { get; set; }
-
-        public List<UserProvider> UserProviders { get; set; }
     }
 }

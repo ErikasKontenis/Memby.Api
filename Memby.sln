@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby", "Memby\Memby.csproj", "{3B4F619A-5060-4E63-8D8D-D19AC5343C1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby.WebApi", "Memby\Memby.WebApi.csproj", "{3B4F619A-5060-4E63-8D8D-D19AC5343C1B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby.Application", "Memby.Application\Memby.Application.csproj", "{E4A8EE8A-4FB5-4F9D-B04D-47745095F0DD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby.Core", "Memby.Core\Memby.Core.csproj", "{4731779F-87CA-4281-817A-EFF2F9F0DC58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memby.Contracts", "Memby.Contracts\Memby.Contracts.csproj", "{86BE1D82-E3C9-4D3A-AE00-0A234F3F1321}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby.Contracts", "Memby.Contracts\Memby.Contracts.csproj", "{86BE1D82-E3C9-4D3A-AE00-0A234F3F1321}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memby.Data", "Memby.Data\Memby.Data.csproj", "{658DA670-1EDC-4B1E-AD68-8DB44FA666DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby.Data", "Memby.Data\Memby.Data.csproj", "{658DA670-1EDC-4B1E-AD68-8DB44FA666DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memby.Domain", "Memby.Domain\Memby.Domain.csproj", "{E1A30FF4-349D-4106-ACDF-0E21F459F43B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby.Domain", "Memby.Domain\Memby.Domain.csproj", "{E1A30FF4-349D-4106-ACDF-0E21F459F43B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memby.Services", "Memby.Services\Memby.Services.csproj", "{56A8C08F-006A-4D7E-898C-EA9E346ED633}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby.Services", "Memby.Services\Memby.Services.csproj", "{56A8C08F-006A-4D7E-898C-EA9E346ED633}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0173298E-148A-4866-8BA1-7DAF5C603ACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memby.UnitTests", "Memby.UnitTests\Memby.UnitTests.csproj", "{D4728A80-1270-4DF3-A535-8BFA52064286}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby.UnitTests", "Memby.UnitTests\Memby.UnitTests.csproj", "{D4728A80-1270-4DF3-A535-8BFA52064286}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memby.IntegrationTests", "Memby.IntegrationTests\Memby.IntegrationTests.csproj", "{823101F8-8C27-4AE5-8557-0794F8EE5A98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Memby.IntegrationTests", "Memby.IntegrationTests\Memby.IntegrationTests.csproj", "{823101F8-8C27-4AE5-8557-0794F8EE5A98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

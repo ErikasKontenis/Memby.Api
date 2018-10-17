@@ -13,10 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Resources\Messages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

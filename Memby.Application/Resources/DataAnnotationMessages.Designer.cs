@@ -61,6 +61,15 @@ namespace Memby.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DateOfBirthRequired##;Gimimo data yra privalomas laukas.
+        /// </summary>
+        public static string DateOfBirthRequired {
+            get {
+                return ResourceManager.GetString("DateOfBirthRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EmailFormatIncorrect##;Neteisingas pašto adreso formatas.
         /// </summary>
         public static string EmailFormatIncorrect {
@@ -75,6 +84,33 @@ namespace Memby.Application.Resources {
         public static string EmailRequired {
             get {
                 return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GenderRequired##;Lytis yra privalomas laukas.
+        /// </summary>
+        public static string GenderRequired {
+            get {
+                return ResourceManager.GetString("GenderRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NameMinLengthIncorrect##;Vardo ilgis turi būti ilgesnis negu 2 simboliai.
+        /// </summary>
+        public static string NameMinLengthIncorrect {
+            get {
+                return ResourceManager.GetString("NameMinLengthIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NameRequired##;Vardas yra privaloomas laukas.
+        /// </summary>
+        public static string NameRequired {
+            get {
+                return ResourceManager.GetString("NameRequired", resourceCulture);
             }
         }
         
@@ -111,6 +147,24 @@ namespace Memby.Application.Resources {
         public static string PasswordRequired {
             get {
                 return ResourceManager.GetString("PasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SurnameMinLengthIncorrect##;Pavardės ilgis turi būti ilgesnis negu 2 simboliai.
+        /// </summary>
+        public static string SurnameMinLengthIncorrect {
+            get {
+                return ResourceManager.GetString("SurnameMinLengthIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SurnameRequired##;Pavardė yra privalomas laukas.
+        /// </summary>
+        public static string SurnameRequired {
+            get {
+                return ResourceManager.GetString("SurnameRequired", resourceCulture);
             }
         }
     }

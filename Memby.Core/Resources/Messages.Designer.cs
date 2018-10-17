@@ -61,6 +61,24 @@ namespace Memby.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Šis vartotojo el. pašto adresas jau yra užimtas.
+        /// </summary>
+        public static string EmailExists {
+            get {
+                return ResourceManager.GetString("EmailExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neteisingi vartotojo prisijungimo duomenys.
+        /// </summary>
+        public static string LoginUserIncorrectCredentials {
+            get {
+                return ResourceManager.GetString("LoginUserIncorrectCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Validacijos klaida.
         /// </summary>
         public static string SimpleValidationMessage {

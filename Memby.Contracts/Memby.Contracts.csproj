@@ -13,10 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Memby.Application\Memby.Application.csproj" />
     <ProjectReference Include="..\Memby.Domain\Memby.Domain.csproj" />
   </ItemGroup>
 

@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DateOfBirthRequired" xml:space="preserve">
+    <value>DateOfBirthRequired##;Gimimo data yra privalomas laukas</value>
+  </data>
   <data name="EmailFormatIncorrect" xml:space="preserve">
     <value>EmailFormatIncorrect##;Neteisingas pašto adreso formatas</value>
   </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>EmailRequired##;Pašto adresas yra privalomas laukas</value>
+  </data>
+  <data name="GenderRequired" xml:space="preserve">
+    <value>GenderRequired##;Lytis yra privalomas laukas</value>
+  </data>
+  <data name="NameMinLengthIncorrect" xml:space="preserve">
+    <value>NameMinLengthIncorrect##;Vardo ilgis turi būti ilgesnis negu 2 simboliai</value>
+  </data>
+  <data name="NameRequired" xml:space="preserve">
+    <value>NameRequired##;Vardas yra privaloomas laukas</value>
   </data>
   <data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
     <value>PasswordConfirmationDoesNotMatch##;Slaptažodžio patvirtinimas nesutampa</value>
@@ -134,5 +146,11 @@
   </data>
   <data name="PasswordRequired" xml:space="preserve">
     <value>PasswordRequired##;Slaptažodis yra privalomas laukas</value>
+  </data>
+  <data name="SurnameMinLengthIncorrect" xml:space="preserve">
+    <value>SurnameMinLengthIncorrect##;Pavardės ilgis turi būti ilgesnis negu 2 simboliai</value>
+  </data>
+  <data name="SurnameRequired" xml:space="preserve">
+    <value>SurnameRequired##;Pavardė yra privalomas laukas</value>
   </data>
 </root>

@@ -9,6 +9,8 @@ namespace Memby.Data.DbContexts
         public MembyDbContext(DbContextOptions<MembyDbContext> options) : base(options)
         { }
 
+        public virtual DbSet<UserProvider> UserProviders { get; set; }
+
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -16,6 +18,7 @@ namespace Memby.Data.DbContexts
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserProviderConfiguration());
         }
     }
 }
