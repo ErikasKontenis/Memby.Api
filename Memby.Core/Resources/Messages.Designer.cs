@@ -88,6 +88,15 @@ namespace Memby.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Neteisingas senas vartotojo slaptažodis.
+        /// </summary>
+        public static string UpdateUserPasswordIncorrectOldPassword {
+            get {
+                return ResourceManager.GetString("UpdateUserPasswordIncorrectOldPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vartotojas neegizstuoja.
         /// </summary>
         public static string UserDoesNotExist {

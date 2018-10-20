@@ -129,5 +129,25 @@ namespace Memby.Services.Users
 
             return new UpdateUserEmailResultDto();
         }
+
+        public async Task<UpdateUserPasswordResultDto> UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto, int userId)
+        {
+            var user = await _usersRepository.GetAsync(userId);
+            if (user == null)
+            {
+                throw new ValidationException(Messages.UserDoesNotExist, nameof(Messages.UserDoesNotExist));
+            }
+
+            if (user.Password != _securityService.HashPassword(updateUserPasswordDto.OldPassword))
+            {
+                throw new ValidationException(Messages.UpdateUserPasswordIncorrectOldPassword, nameof(Messages.UpdateUserPasswordIncorrectOldPassword));
+            }
+
+            user.Password = _securityService.HashPassword(updateUserPasswordDto.Password);
+
+            await _usersRepository.UpdateAsync(user);
+
+            return new UpdateUserPasswordResultDto();
+        }
     }
 }

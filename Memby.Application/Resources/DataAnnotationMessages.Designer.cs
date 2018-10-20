@@ -115,6 +115,15 @@ namespace Memby.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OldPasswordRequired##;Senas prisijungimo slaptažodis yra privalomas laukas.
+        /// </summary>
+        public static string OldPasswordRequired {
+            get {
+                return ResourceManager.GetString("OldPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PasswordConfirmationDoesNotMatch##;Slaptažodžio patvirtinimas nesutampa.
         /// </summary>
         public static string PasswordConfirmationDoesNotMatch {

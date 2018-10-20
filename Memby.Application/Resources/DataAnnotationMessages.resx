@@ -135,6 +135,9 @@
   <data name="NameRequired" xml:space="preserve">
     <value>NameRequired##;Vardas yra privaloomas laukas</value>
   </data>
+  <data name="OldPasswordRequired" xml:space="preserve">
+    <value>OldPasswordRequired##;Senas prisijungimo slaptažodis yra privalomas laukas</value>
+  </data>
   <data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
     <value>PasswordConfirmationDoesNotMatch##;Slaptažodžio patvirtinimas nesutampa</value>
   </data>

@@ -126,6 +126,9 @@
   <data name="SimpleValidationMessage" xml:space="preserve">
     <value>Validacijos klaida</value>
   </data>
+  <data name="UpdateUserPasswordIncorrectOldPassword" xml:space="preserve">
+    <value>Neteisingas senas vartotojo slaptažodis</value>
+  </data>
   <data name="UserDoesNotExist" xml:space="preserve">
     <value>Vartotojas neegizstuoja</value>
   </data>

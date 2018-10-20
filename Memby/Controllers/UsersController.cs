@@ -75,5 +75,19 @@ namespace Memby.WebApi.Controllers
 
             return Ok(updateUserEmailResultDto);
         }
+
+        [HttpPut]
+        [Route("UpdateUserPassword")]
+        public async Task<IActionResult> UpdateUserPassword(UpdateUserPasswordDto item)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ModelStateResult(ModelState));
+            }
+
+            var updateUserPasswordResultDto = await _usersService.UpdateUserPassword(item, UserId);
+
+            return Ok(updateUserPasswordResultDto);
+        }
     }
 }

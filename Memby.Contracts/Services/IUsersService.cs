@@ -12,5 +12,7 @@ namespace Memby.Contracts.Services
         Task<UpdateUserInfoResultDto> UpdateUserInfo(UpdateUserInfoDto updateUserInfoDto, int userId);
 
         Task<UpdateUserEmailResultDto> UpdateUserEmail(UpdateUserEmailDto updateUserEmailDto, int userId);
+
+        Task<UpdateUserPasswordResultDto> UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto, int userId);
     }
 }
