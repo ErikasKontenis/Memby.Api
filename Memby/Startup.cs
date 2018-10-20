@@ -192,6 +192,7 @@ namespace Memby
 
             services.AddSwaggerGen(c =>
             {
+                c.DescribeAllEnumsAsStrings();
                 c.SwaggerDoc("v1", new Info { Title = "Memby", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)], Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey" });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
