@@ -61,6 +61,24 @@ namespace Memby.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AddressRequired##;Adresas yra privalomas laukas.
+        /// </summary>
+        public static string AddressRequired {
+            get {
+                return ResourceManager.GetString("AddressRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CompanyNameRequired##; Įmonės pavadinimas yra privalomas laukas.
+        /// </summary>
+        public static string CompanyNameRequired {
+            get {
+                return ResourceManager.GetString("CompanyNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DateOfBirthRequired##;Gimimo data yra privalomas laukas.
         /// </summary>
         public static string DateOfBirthRequired {
@@ -160,6 +178,15 @@ namespace Memby.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RegistrationNumberRequired##; Įmonės registracijos numeris yra privalomas laukas.
+        /// </summary>
+        public static string RegistrationNumberRequired {
+            get {
+                return ResourceManager.GetString("RegistrationNumberRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SurnameMinLengthIncorrect##;Pavardės ilgis turi būti ilgesnis negu 2 simboliai.
         /// </summary>
         public static string SurnameMinLengthIncorrect {
@@ -174,6 +201,15 @@ namespace Memby.Application.Resources {
         public static string SurnameRequired {
             get {
                 return ResourceManager.GetString("SurnameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VatNumberRequired##; PVM kodas yra privalomas laukas.
+        /// </summary>
+        public static string VatNumberRequired {
+            get {
+                return ResourceManager.GetString("VatNumberRequired", resourceCulture);
             }
         }
     }

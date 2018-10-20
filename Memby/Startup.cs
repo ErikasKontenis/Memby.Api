@@ -5,6 +5,7 @@ using Memby.Data.DbContexts;
 using Memby.Data.Extensions;
 using Memby.Data.Repositories;
 using Memby.Middlewares;
+using Memby.Services.Companies;
 using Memby.Services.Jwt;
 using Memby.Services.Security;
 using Memby.Services.Users;
@@ -93,10 +94,13 @@ namespace Memby
             // Add application services:
             _container.Register(typeof(IUsersService), typeof(UsersService));
             _container.Register(typeof(ISecurityService), typeof(SecurityService));
+            _container.Register(typeof(ICompaniesService), typeof(CompaniesService));
 
             // Automatically register generic repositories by contract
             _container.Register(typeof(IRepository<>), typeof(Repository<>));
             _container.Register(typeof(IUsersRepository), typeof(UsersRepository));
+            _container.Register(typeof(IUserRolesRepository), typeof(UserRolesRepository));
+            _container.Register(typeof(ICompaniesRepository), typeof(CompaniesRepository));
 
             _container.AutoCrossWireAspNetComponents(app);
             _container.Verify();

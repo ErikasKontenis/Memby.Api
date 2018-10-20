@@ -22,6 +22,10 @@ namespace Memby.Data.Configurations
             entity.HasMany(o => o.UserProviders)
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId);
+
+            entity.HasMany(o => o.Employees)
+                .WithOne(o => o.User)
+                .HasForeignKey(o => o.UserId);
         }
     }
 }

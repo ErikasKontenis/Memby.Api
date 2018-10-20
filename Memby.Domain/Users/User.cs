@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Memby.Domain.Companies;
+using Memby.Domain.Employees;
+using System;
 using System.Collections.Generic;
 
 namespace Memby.Domain.Users
@@ -7,11 +9,17 @@ namespace Memby.Domain.Users
     {
         public User()
         {
+            Companies = new List<Company>();
+            Employees = new List<Employee>();
             UserProviders = new List<UserProvider>();
             UserRoles = new List<UserRole>();
         }
 
+        public List<Company> Companies { get; set; }
+
         public string Email { get; set; }
+
+        public List<Employee> Employees { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 

@@ -13,7 +13,7 @@ namespace Memby.Data.Repositories
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
         private readonly char[] _coma = { ',' };
-        private readonly DbSet<TEntity> _dbSet;
+        private protected readonly DbSet<TEntity> _dbSet;
         private protected readonly MembyDbContext _dbContext;
 
         public Repository(MembyDbContext dbContext)

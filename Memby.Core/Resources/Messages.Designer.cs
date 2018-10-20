@@ -61,6 +61,15 @@ namespace Memby.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Įmonė neegzistuoja.
+        /// </summary>
+        public static string CompanyDoesNotExist {
+            get {
+                return ResourceManager.GetString("CompanyDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Šis vartotojo el. pašto adresas jau yra užimtas.
         /// </summary>
         public static string EmailExists {

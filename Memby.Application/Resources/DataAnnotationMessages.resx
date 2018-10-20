@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddressRequired" xml:space="preserve">
+    <value>AddressRequired##;Adresas yra privalomas laukas</value>
+  </data>
+  <data name="CompanyNameRequired" xml:space="preserve">
+    <value>CompanyNameRequired##; Įmonės pavadinimas yra privalomas laukas</value>
+  </data>
   <data name="DateOfBirthRequired" xml:space="preserve">
     <value>DateOfBirthRequired##;Gimimo data yra privalomas laukas</value>
   </data>
@@ -150,10 +156,16 @@
   <data name="PasswordRequired" xml:space="preserve">
     <value>PasswordRequired##;Slaptažodis yra privalomas laukas</value>
   </data>
+  <data name="RegistrationNumberRequired" xml:space="preserve">
+    <value>RegistrationNumberRequired##; Įmonės registracijos numeris yra privalomas laukas</value>
+  </data>
   <data name="SurnameMinLengthIncorrect" xml:space="preserve">
     <value>SurnameMinLengthIncorrect##;Pavardės ilgis turi būti ilgesnis negu 2 simboliai</value>
   </data>
   <data name="SurnameRequired" xml:space="preserve">
     <value>SurnameRequired##;Pavardė yra privalomas laukas</value>
+  </data>
+  <data name="VatNumberRequired" xml:space="preserve">
+    <value>VatNumberRequired##; PVM kodas yra privalomas laukas</value>
   </data>
 </root>
