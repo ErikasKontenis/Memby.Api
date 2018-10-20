@@ -11,6 +11,8 @@ namespace Memby.Data.DbContexts
 
         public virtual DbSet<UserProvider> UserProviders { get; set; }
 
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,6 +21,7 @@ namespace Memby.Data.DbContexts
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserProviderConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
         }
     }
 }

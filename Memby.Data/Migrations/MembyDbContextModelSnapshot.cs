@@ -26,7 +26,7 @@ namespace Memby.Data.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<int>("Gender");
+                    b.Property<int>("GenderId");
 
                     b.Property<bool>("IsIndividualOffersEnabled");
 
@@ -72,10 +72,34 @@ namespace Memby.Data.Migrations
                     b.ToTable("UserProviders");
                 });
 
+            modelBuilder.Entity("Memby.Domain.Users.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("RoleId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoles");
+                });
+
             modelBuilder.Entity("Memby.Domain.Users.UserProvider", b =>
                 {
                     b.HasOne("Memby.Domain.Users.User", "User")
                         .WithMany("UserProviders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Memby.Domain.Users.UserRole", b =>
+                {
+                    b.HasOne("Memby.Domain.Users.User", "User")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -5,11 +5,17 @@ namespace Memby.Domain.Users
 {
     public class User : Entity
     {
+        public User()
+        {
+            UserProviders = new List<UserProvider>();
+            UserRoles = new List<UserRole>();
+        }
+
         public string Email { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 
-        public int Gender { get; set; }
+        public int GenderId { get; set; }
 
         public bool IsIndividualOffersEnabled { get; set; }
 
@@ -24,5 +30,7 @@ namespace Memby.Domain.Users
         public string Surname { get; set; }
 
         public List<UserProvider> UserProviders { get; set; }
+
+        public List<UserRole> UserRoles { get; set; }
     }
 }

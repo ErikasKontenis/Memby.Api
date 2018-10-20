@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Memby.Core.Enums;
+using Memby.Domain.Users;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,12 +28,14 @@ namespace Memby.Services.Jwt
         public async Task<string> GenerateEncodedToken(string email, ClaimsIdentity identity)
         {
             var claims = new[]
-         {
-                 new Claim(JwtRegisteredClaimNames.Sub, email),
-                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-                 identity.FindFirst(Constants.Strings.JwtClaimIdentifiers.Rol),
-                 identity.FindFirst(Constants.Strings.JwtClaimIdentifiers.Id)
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
+                new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
+                identity.FindFirst("Id"),
+                identity.FindFirst(nameof(Roles.NaturalPerson)),
+                identity.FindFirst(nameof(Roles.LegalPerson)),
+                identity.FindFirst(nameof(Roles.Admin))
              };
 
             // Create the JWT security token and encode it.
@@ -48,13 +52,30 @@ namespace Memby.Services.Jwt
             return encodedJwt;
         }
 
-        public ClaimsIdentity GenerateClaimsIdentity(string email, string id)
+        public ClaimsIdentity GenerateClaimsIdentity(User user)
         {
-            return new ClaimsIdentity(new GenericIdentity(email, "Token"), new[]
+            var claimsIdentity = new ClaimsIdentity(new GenericIdentity(user.Email, "Token"), new[]
             {
-                new Claim(Constants.Strings.JwtClaimIdentifiers.Id, id),
-                new Claim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess)
+                new Claim("Id", user.Id.ToString()),
             });
+
+            foreach (var userRole in user.UserRoles)
+            {
+                if (userRole.RoleId == (int)Roles.NaturalPerson)
+                {
+                    claimsIdentity.AddClaim(new Claim(nameof(Roles.NaturalPerson), "true"));
+                }
+                else if (userRole.RoleId == (int)Roles.LegalPerson)
+                {
+                    claimsIdentity.AddClaim(new Claim(nameof(Roles.LegalPerson), "true"));
+                }
+                else if (userRole.RoleId == (int)Roles.Admin)
+                {
+                    claimsIdentity.AddClaim(new Claim(nameof(Roles.Admin), "true"));
+                }
+            }
+
+            return claimsIdentity;
         }
 
         /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>

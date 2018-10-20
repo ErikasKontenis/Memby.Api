@@ -7,12 +7,6 @@ using Memby.Core.Resources;
 using Memby.Domain.Users;
 using Memby.Services.Jwt;
 using Memby.Services.Security;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Memby.Services.Users
@@ -43,7 +37,7 @@ namespace Memby.Services.Users
             {
                 DateOfBirth = createUserDto.DateOfBirth,
                 Email = createUserDto.Email,
-                Gender = (int)createUserDto.Gender,
+                GenderId = (int)createUserDto.Gender,
                 IsIndividualOffersEnabled = createUserDto.IsIndividualOffersEnabled,
                 IsNewOffersEnabled = createUserDto.IsNewOffersEnabled,
                 IsSystemNotificationsEnabled = createUserDto.IsSystemNotificationsEnabled,
@@ -51,6 +45,8 @@ namespace Memby.Services.Users
                 Password = _securityService.HashPassword(createUserDto.Password),
                 Surname = createUserDto.Surname
             };
+
+            user.UserRoles.Add(new UserRole() { RoleId = (int)Roles.NaturalPerson });
 
             return new CreateUserResultDto()
             {
@@ -60,13 +56,13 @@ namespace Memby.Services.Users
 
         public async Task<LoginUserResultDto> Login(LoginUserDto loginUserDto)
         {
-            var user = await _usersRepository.GetAsync(filter: o => o.Email == loginUserDto.Email && o.Password == _securityService.HashPassword(loginUserDto.Password));
+            var user = await _usersRepository.GetAsync(filter: o => o.Email == loginUserDto.Email && o.Password == _securityService.HashPassword(loginUserDto.Password), includeProperties: "UserRoles");
             if (user == null)
             {
                 throw new ValidationException(Messages.LoginUserIncorrectCredentials, nameof(Messages.LoginUserIncorrectCredentials));
             }
 
-            var userClaimsIdentity = await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(user.Email, user.Id.ToString()));
+            var userClaimsIdentity = await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(user));
 
             var jwt = await _jwtFactory.GenerateJwt(userClaimsIdentity, _jwtFactory, loginUserDto.Email);
 
@@ -74,7 +70,7 @@ namespace Memby.Services.Users
             {
                 DateOfBirth = user.DateOfBirth,
                 Email = user.Email,
-                Gender = (Genders)user.Gender,
+                Gender = (Genders)user.GenderId,
                 IsIndividualOffersEnabled = user.IsIndividualOffersEnabled,
                 IsNewOffersEnabled = user.IsNewOffersEnabled,
                 IsSystemNotificationsEnabled = user.IsSystemNotificationsEnabled,
@@ -98,7 +94,7 @@ namespace Memby.Services.Users
             }
 
             user.DateOfBirth = updateUserInfoDto.DateOfBirth;
-            user.Gender = (int)updateUserInfoDto.Gender;
+            user.GenderId = (int)updateUserInfoDto.Gender;
             user.IsIndividualOffersEnabled = updateUserInfoDto.IsIndividualOffersEnabled;
             user.IsNewOffersEnabled = updateUserInfoDto.IsNewOffersEnabled;
             user.IsSystemNotificationsEnabled = updateUserInfoDto.IsSystemNotificationsEnabled;

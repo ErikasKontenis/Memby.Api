@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Memby.WebApi.Controllers
 {
-    [Authorize(Policy = "ApiUser")]
+    [Authorize(Policy = "NaturalPerson")]
     [Route("api/[controller]")]
     public class UsersController : ApiControllerBase
     {

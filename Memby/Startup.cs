@@ -1,5 +1,6 @@
 ﻿using Memby.Contracts.Repositories;
 using Memby.Contracts.Services;
+using Memby.Core.Enums;
 using Memby.Data.DbContexts;
 using Memby.Data.Extensions;
 using Memby.Data.Repositories;
@@ -145,7 +146,9 @@ namespace Memby
             // api user claim policy
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+                options.AddPolicy("Admin", policy => policy.RequireClaim(nameof(Roles.Admin), "true"));
+                options.AddPolicy("LegalPerson", policy => policy.RequireClaim(nameof(Roles.LegalPerson), "true"));
+                options.AddPolicy("NaturalPerson", policy => policy.RequireClaim(nameof(Roles.NaturalPerson), "true"));
             });
 
             services.AddSingleton<IJwtFactory, JwtFactory>();

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Memby.Domain.Users;
+using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -10,6 +11,6 @@ namespace Memby.Services.Jwt
 
         Task<string> GenerateEncodedToken(string email, ClaimsIdentity identity);
 
-        ClaimsIdentity GenerateClaimsIdentity(string email, string id);
+        ClaimsIdentity GenerateClaimsIdentity(User user);
     }
 }

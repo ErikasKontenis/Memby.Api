@@ -16,7 +16,7 @@ namespace Memby.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Gender = table.Column<int>(nullable: false),
+                    GenderId = table.Column<int>(nullable: false),
                     IsIndividualOffersEnabled = table.Column<bool>(nullable: false),
                     IsNewOffersEnabled = table.Column<bool>(nullable: false),
                     IsSystemNotificationsEnabled = table.Column<bool>(nullable: false),
@@ -50,6 +50,26 @@ namespace Memby.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserRoles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserRoles_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_UserProviders_UserId",
                 table: "UserProviders",
@@ -60,6 +80,11 @@ namespace Memby.Data.Migrations
                 table: "UserProviders",
                 column: "Uuid",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_UserId",
+                table: "UserRoles",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
@@ -78,6 +103,9 @@ namespace Memby.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "UserProviders");
+
+            migrationBuilder.DropTable(
+                name: "UserRoles");
 
             migrationBuilder.DropTable(
                 name: "Users");
