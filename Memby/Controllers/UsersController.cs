@@ -3,14 +3,13 @@ using Memby.Contracts.Services;
 using Memby.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
-namespace Memby.Controllers
+namespace Memby.WebApi.Controllers
 {
     [Authorize(Policy = "ApiUser")]
     [Route("api/[controller]")]
-    public class UsersController : Controller
+    public class UsersController : ApiControllerBase
     {
         private readonly IUsersService _usersService;
 
@@ -50,18 +49,31 @@ namespace Memby.Controllers
         }
 
         [HttpPut]
-        [Route("Update")]
-        public async Task<IActionResult> Update(UpdateUserInfoDto item)
+        [Route("UpdateUserInfo")]
+        public async Task<IActionResult> UpdateUserInfo(UpdateUserInfoDto item)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new ModelStateResult(ModelState));
             }
 
-            var userId = Convert.ToInt32(HttpContext.User.FindFirst(o => o.Type == "id").Value);
-            var updateUserInfoResultDto = await _usersService.UpdateUserInfo(item, userId);
+            var updateUserInfoResultDto = await _usersService.UpdateUserInfo(item, UserId);
 
             return Ok(updateUserInfoResultDto);
+        }
+
+        [HttpPut]
+        [Route("UpdateUserEmail")]
+        public async Task<IActionResult> UpdateUserEmail(UpdateUserEmailDto item)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ModelStateResult(ModelState));
+            }
+
+            var updateUserEmailResultDto = await _usersService.UpdateUserEmail(item, UserId);
+
+            return Ok(updateUserEmailResultDto);
         }
     }
 }

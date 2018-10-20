@@ -109,5 +109,25 @@ namespace Memby.Services.Users
 
             return new UpdateUserInfoResultDto();
         }
+
+        public async Task<UpdateUserEmailResultDto> UpdateUserEmail(UpdateUserEmailDto updateUserEmailDto, int userId)
+        {
+            var user = await _usersRepository.GetAsync(userId);
+            if (user == null)
+            {
+                throw new ValidationException(Messages.UserDoesNotExist, nameof(Messages.UserDoesNotExist));
+            }
+
+            if (await _usersRepository.GetAsync(filter: o => o.Email == updateUserEmailDto.Email) != null)
+            {
+                throw new ValidationException(Messages.EmailExists, nameof(Messages.EmailExists));
+            }
+
+            user.Email = updateUserEmailDto.Email;
+
+            await _usersRepository.UpdateAsync(user);
+
+            return new UpdateUserEmailResultDto();
+        }
     }
 }
