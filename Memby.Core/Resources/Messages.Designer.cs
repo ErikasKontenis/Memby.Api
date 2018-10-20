@@ -86,5 +86,14 @@ namespace Memby.Core.Resources {
                 return ResourceManager.GetString("SimpleValidationMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vartotojas neegizstuoja.
+        /// </summary>
+        public static string UserDoesNotExist {
+            get {
+                return ResourceManager.GetString("UserDoesNotExist", resourceCulture);
+            }
+        }
     }
 }

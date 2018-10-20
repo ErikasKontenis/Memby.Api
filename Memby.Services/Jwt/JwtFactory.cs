@@ -18,7 +18,7 @@ namespace Memby.Services.Jwt
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<string> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory, string email, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings)
+        public async Task<string> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory, string email)
         {
             return await jwtFactory.GenerateEncodedToken(email, identity);
         }

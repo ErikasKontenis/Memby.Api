@@ -126,4 +126,7 @@
   <data name="SimpleValidationMessage" xml:space="preserve">
     <value>Validacijos klaida</value>
   </data>
+  <data name="UserDoesNotExist" xml:space="preserve">
+    <value>Vartotojas neegizstuoja</value>
+  </data>
 </root>

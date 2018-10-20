@@ -5,6 +5,7 @@ using Memby.Data.Extensions;
 using Memby.Data.Repositories;
 using Memby.Middlewares;
 using Memby.Services.Jwt;
+using Memby.Services.Security;
 using Memby.Services.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -30,10 +31,6 @@ namespace Memby
 {
     public class Startup
     {
-        private const string SecretKey = "iNivDmHLpUA223sqsfhqGbMRdRj1PVkH"; // todo: get this from somewhere secure
-        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
-
-
         private readonly Container _container = new Container();
 
         public Startup(IConfiguration configuration)
@@ -51,6 +48,7 @@ namespace Memby
 
             ConfigureSimpleInjector(services);
             ConfigureJwt(services);
+            ConfigureSecurity(services);
             ConfigureSwagger(services);
         }
 
@@ -93,6 +91,7 @@ namespace Memby
 
             // Add application services:
             _container.Register(typeof(IUsersService), typeof(UsersService));
+            _container.Register(typeof(ISecurityService), typeof(SecurityService));
 
             // Automatically register generic repositories by contract
             _container.Register(typeof(IRepository<>), typeof(Repository<>));
@@ -106,13 +105,14 @@ namespace Memby
         {
             // Get options from app settings
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var issuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtAppSettingOptions["issuerSigningKey"]));
 
             // Configure JwtIssuerOptions
             services.Configure<JwtIssuerOptions>(options =>
             {
                 options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
-                options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+                options.SigningCredentials = new SigningCredentials(issuerSigningKey, SecurityAlgorithms.HmacSha256);
             });
 
             var tokenValidationParameters = new TokenValidationParameters
@@ -124,7 +124,7 @@ namespace Memby
                 ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
 
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKey,
+                IssuerSigningKey = issuerSigningKey,
 
                 RequireExpirationTime = false,
                 ValidateLifetime = true,
@@ -151,6 +151,18 @@ namespace Memby
             services.AddSingleton<IJwtFactory, JwtFactory>();
         }
 
+        private void ConfigureSecurity(IServiceCollection services)
+        {
+            // Get options from app settings
+            var securityOptions = Configuration.GetSection(nameof(SecurityOptions));
+
+            // Configure JwtIssuerOptions
+            services.Configure<SecurityOptions>(options =>
+            {
+                options.PasswordSalt = securityOptions[nameof(SecurityOptions.PasswordSalt)];
+            });
+        }
+
         private void ConfigureMigrations(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -173,10 +185,12 @@ namespace Memby
 
         private void ConfigureSwagger(IServiceCollection services)
         {
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Memby", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = "webApi", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey" });
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)], Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey" });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
                 {
                     {

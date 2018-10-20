@@ -6,6 +6,7 @@ using Memby.Core.Exceptions;
 using Memby.Core.Resources;
 using Memby.Domain.Users;
 using Memby.Services.Jwt;
+using Memby.Services.Security;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -20,43 +21,46 @@ namespace Memby.Services.Users
     {
         private readonly IUsersRepository _usersRepository;
         private readonly IJwtFactory _jwtFactory;
-        private readonly JwtIssuerOptions _jwtOptions;
+        private readonly ISecurityService _securityService;
 
         public UsersService(IUsersRepository usersRepository,
             IJwtFactory jwtFactory,
-            IOptions<JwtIssuerOptions> jwtOptions)
+            ISecurityService securityService)
         {
             _usersRepository = usersRepository;
             _jwtFactory = jwtFactory;
-            _jwtOptions = jwtOptions.Value;
+            _securityService = securityService;
         }
 
-        public async Task Register(UpsertUserDto upsertUserDto)
+        public async Task<CreateUserResultDto> Register(CreateUserDto createUserDto)
         {
-            if (await _usersRepository.GetAsync(filter: o => o.Email == upsertUserDto.Email) != null)
+            if (await _usersRepository.GetAsync(filter: o => o.Email == createUserDto.Email) != null)
             {
                 throw new ValidationException(Messages.EmailExists, nameof(Messages.EmailExists));
             }
 
             var user = new User()
             {
-                DateOfBirth = upsertUserDto.DateOfBirth,
-                Email = upsertUserDto.Email,
-                Gender = (int)upsertUserDto.Gender,
-                IsIndividualOffersEnabled = upsertUserDto.IsIndividualOffersEnabled,
-                IsNewOffersEnabled = upsertUserDto.IsNewOffersEnabled,
-                IsSystemNotificationsEnabled = upsertUserDto.IsSystemNotificationsEnabled,
-                Name = upsertUserDto.Name,
-                Password = HashPassword(upsertUserDto.Password),
-                Surname = upsertUserDto.Surname
+                DateOfBirth = createUserDto.DateOfBirth,
+                Email = createUserDto.Email,
+                Gender = (int)createUserDto.Gender,
+                IsIndividualOffersEnabled = createUserDto.IsIndividualOffersEnabled,
+                IsNewOffersEnabled = createUserDto.IsNewOffersEnabled,
+                IsSystemNotificationsEnabled = createUserDto.IsSystemNotificationsEnabled,
+                Name = createUserDto.Name,
+                Password = _securityService.HashPassword(createUserDto.Password),
+                Surname = createUserDto.Surname
             };
 
-            await _usersRepository.InsertAsync(user);
+            return new CreateUserResultDto()
+            {
+                UserId = (await _usersRepository.InsertAsync(user)).Id
+            };
         }
 
         public async Task<LoginUserResultDto> Login(LoginUserDto loginUserDto)
         {
-            var user = await _usersRepository.GetAsync(filter: o => o.Email == loginUserDto.Email && o.Password == HashPassword(loginUserDto.Password));
+            var user = await _usersRepository.GetAsync(filter: o => o.Email == loginUserDto.Email && o.Password == _securityService.HashPassword(loginUserDto.Password));
             if (user == null)
             {
                 throw new ValidationException(Messages.LoginUserIncorrectCredentials, nameof(Messages.LoginUserIncorrectCredentials));
@@ -64,7 +68,7 @@ namespace Memby.Services.Users
 
             var userClaimsIdentity = await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(user.Email, user.Id.ToString()));
 
-            var jwt = await _jwtFactory.GenerateJwt(userClaimsIdentity, _jwtFactory, loginUserDto.Email, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
+            var jwt = await _jwtFactory.GenerateJwt(userClaimsIdentity, _jwtFactory, loginUserDto.Email);
 
             var userDto = new UserDto()
             {
@@ -85,20 +89,25 @@ namespace Memby.Services.Users
             };
         }
 
-        private string HashPassword(string password)
+        public async Task<UpdateUserInfoResultDto> UpdateUserInfo(UpdateUserInfoDto updateUserInfoDto, int userId)
         {
-            // generate a 128-bit salt using a secure PRNG
-            var salt = Encoding.ASCII.GetBytes("takfLBF5xETaZXCmyvWL00eochy04XV4zrXrp9iYCvtXeRXK6gEyM17gZaSgDJtPxTnEH924ik8sKXQX1s1HY47xuxUiXTvRYyHO");
+            var user = await _usersRepository.GetAsync(userId);
+            if (user == null)
+            {
+                throw new ValidationException(Messages.UserDoesNotExist, nameof(Messages.UserDoesNotExist));
+            }
 
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
+            user.DateOfBirth = updateUserInfoDto.DateOfBirth;
+            user.Gender = (int)updateUserInfoDto.Gender;
+            user.IsIndividualOffersEnabled = updateUserInfoDto.IsIndividualOffersEnabled;
+            user.IsNewOffersEnabled = updateUserInfoDto.IsNewOffersEnabled;
+            user.IsSystemNotificationsEnabled = updateUserInfoDto.IsSystemNotificationsEnabled;
+            user.Name = updateUserInfoDto.Name;
+            user.Surname = updateUserInfoDto.Surname;
 
-            return hashed;
+            await _usersRepository.UpdateAsync(user);
+
+            return new UpdateUserInfoResultDto();
         }
     }
 }

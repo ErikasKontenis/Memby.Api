@@ -17,7 +17,8 @@ namespace Memby.Data.Configurations
                 .IsUnique();
 
             entity.HasOne(o => o.User)
-                .WithMany(o => o.UserProviders);
+                .WithMany(o => o.UserProviders)
+                .HasForeignKey(o => o.UserId);
         }
     }
 }

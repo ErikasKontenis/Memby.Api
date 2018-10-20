@@ -3,6 +3,7 @@ using Memby.Contracts.Services;
 using Memby.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Memby.Controllers
@@ -21,16 +22,16 @@ namespace Memby.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IActionResult> Register(UpsertUserDto item)
+        public async Task<IActionResult> Register(CreateUserDto item)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new ModelStateResult(ModelState));
             }
 
-            await _usersService.Register(item);
+            var createUserResultDto = await _usersService.Register(item);
 
-            return Ok();
+            return Ok(createUserResultDto);
         }
 
         [HttpPost]
@@ -43,21 +44,24 @@ namespace Memby.Controllers
                 return BadRequest(new ModelStateResult(ModelState));
             }
 
-            var userDto = await _usersService.Login(item);
+            var loginUserResultDto = await _usersService.Login(item);
 
-            return Ok(userDto);
+            return Ok(loginUserResultDto);
         }
 
         [HttpPut]
         [Route("Update")]
-        public async Task<IActionResult> Update()
+        public async Task<IActionResult> Update(UpdateUserInfoDto item)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new ModelStateResult(ModelState));
             }
 
-            return Ok();
+            var userId = Convert.ToInt32(HttpContext.User.FindFirst(o => o.Type == "id").Value);
+            var updateUserInfoResultDto = await _usersService.UpdateUserInfo(item, userId);
+
+            return Ok(updateUserInfoResultDto);
         }
     }
 }

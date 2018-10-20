@@ -5,8 +5,10 @@ namespace Memby.Contracts.Services
 {
     public interface IUsersService
     {
-        Task Register(UpsertUserDto upsertUserDto);
+        Task<CreateUserResultDto> Register(CreateUserDto createUserDto);
 
         Task<LoginUserResultDto> Login(LoginUserDto loginUserDto);
+
+        Task<UpdateUserInfoResultDto> UpdateUserInfo(UpdateUserInfoDto updateUserInfoDto, int userId);
     }
 }
