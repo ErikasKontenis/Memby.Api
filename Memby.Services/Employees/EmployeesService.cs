@@ -92,5 +92,45 @@ namespace Memby.Services.Employees
 
             return new CreateEmployeeResultDto();
         }
+
+        public async Task<UpdateEmployeeResultDto> Update(UpdateEmployeeDto updateEmployeeDto, int userId)
+        {
+            var employee = await _employeesRepository.GetAsync(updateEmployeeDto.Id);
+            if (employee == null)
+            {
+                throw new ValidationException(Messages.EmployeeDoesNotExist, nameof(Messages.EmployeeDoesNotExist));
+            }
+
+            var company = await _companiesRepository.GetAsync(employee.CompanyId, userId);
+            if (company == null)
+            {
+                throw new ValidationException(Messages.EmployeeDoesNotExist, nameof(Messages.EmployeeDoesNotExist));
+            }
+
+            employee.Position = updateEmployeeDto.Position;
+
+            await _employeesRepository.UpdateAsync(employee);
+
+            return new UpdateEmployeeResultDto();
+        }
+
+        public async Task<DeleteEmployeeResultDto> Delete(int id, int userId)
+        {
+            var employee = await _employeesRepository.GetAsync(id);
+            if (employee == null)
+            {
+                throw new ValidationException(Messages.EmployeeDoesNotExist, nameof(Messages.EmployeeDoesNotExist));
+            }
+
+            var company = await _companiesRepository.GetAsync(employee.CompanyId, userId);
+            if (company == null)
+            {
+                throw new ValidationException(Messages.EmployeeDoesNotExist, nameof(Messages.EmployeeDoesNotExist));
+            }
+
+            await _employeesRepository.DeleteAsync(employee);
+
+            return new DeleteEmployeeResultDto();
+        }
     }
 }

@@ -8,5 +8,9 @@ namespace Memby.Contracts.Services
         Task<EmployeeDto> Get(int id, int userId);
 
         Task<CreateEmployeeResultDto> Create(CreateEmployeeDto createEmployeeDto, int userId);
+
+        Task<UpdateEmployeeResultDto> Update(UpdateEmployeeDto updateEmployeeDto, int userId);
+
+        Task<DeleteEmployeeResultDto> Delete(int id, int userId);
     }
 }

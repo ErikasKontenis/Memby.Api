@@ -48,5 +48,35 @@ namespace Memby.WebApi.Controllers
 
             return Ok(createEmployeeResultDto);
         }
+
+        [HttpPut]
+        [Authorize(Policy = "CompanyOwner")]
+        [Route("Update")]
+        public async Task<IActionResult> Update(UpdateEmployeeDto item)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ModelStateResult(ModelState));
+            }
+
+            var updateEmployeeResultDto = await _employeesService.Update(item, UserId);
+
+            return Ok(updateEmployeeResultDto);
+        }
+
+        [HttpDelete]
+        [Authorize(Policy = "CompanyOwner")]
+        [Route("Delete/{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ModelStateResult(ModelState));
+            }
+
+            var deleteEmployeeResultDto = await _employeesService.Delete(id, UserId);
+
+            return Ok(deleteEmployeeResultDto);
+        }
     }
 }
