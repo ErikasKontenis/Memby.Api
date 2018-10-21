@@ -22,7 +22,8 @@ namespace Memby.Data.Migrations
                     IsSystemNotificationsEnabled = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
-                    Surname = table.Column<string>(nullable: true)
+                    Surname = table.Column<string>(nullable: true),
+                    Uuid = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,6 +37,7 @@ namespace Memby.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Address = table.Column<string>(nullable: true),
+                    BrandName = table.Column<string>(nullable: true),
                     Logo = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     RegistrationNumber = table.Column<string>(nullable: true),
@@ -156,6 +158,12 @@ namespace Memby.Data.Migrations
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Uuid",
+                table: "Users",
+                column: "Uuid",
                 unique: true);
 
             migrationBuilder.CreateIndex(

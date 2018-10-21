@@ -7,6 +7,7 @@ using Memby.Core.Resources;
 using Memby.Domain.Users;
 using Memby.Services.Jwt;
 using Memby.Services.Security;
+using System;
 using System.Threading.Tasks;
 
 namespace Memby.Services.Users
@@ -43,14 +44,15 @@ namespace Memby.Services.Users
                 IsSystemNotificationsEnabled = createUserDto.IsSystemNotificationsEnabled,
                 Name = createUserDto.Name,
                 Password = _securityService.HashPassword(createUserDto.Password),
-                Surname = createUserDto.Surname
+                Surname = createUserDto.Surname,
+                Uuid = Guid.NewGuid()
             };
 
-            user.UserRoles.Add(new UserRole() { RoleId = (int)Roles.NaturalPerson });
+            user.UserRoles.Add(new UserRole() { RoleId = (int)Roles.RegularUser });
 
             return new CreateUserResultDto()
             {
-                UserId = (await _usersRepository.InsertAsync(user)).Id
+                UserUuid = (await _usersRepository.InsertAsync(user)).Uuid
             };
         }
 
@@ -75,7 +77,8 @@ namespace Memby.Services.Users
                 IsNewOffersEnabled = user.IsNewOffersEnabled,
                 IsSystemNotificationsEnabled = user.IsSystemNotificationsEnabled,
                 Name = user.Name,
-                Surname = user.Surname
+                Surname = user.Surname,
+                Uuid = user.Uuid
             };
 
             return new LoginUserResultDto()

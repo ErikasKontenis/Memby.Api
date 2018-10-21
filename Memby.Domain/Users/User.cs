@@ -40,5 +40,7 @@ namespace Memby.Domain.Users
         public List<UserProvider> UserProviders { get; set; }
 
         public List<UserRole> UserRoles { get; set; }
+
+        public Guid Uuid { get; set; }
     }
 }

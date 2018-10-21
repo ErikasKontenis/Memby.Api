@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Memby.Core.Enums
+﻿namespace Memby.Core.Enums
 {
     public enum Roles
     {
-        NaturalPerson = 1,
-        LegalPerson,
+        RegularUser = 1,
+        Employee,
+        CompanyOwner,
         Admin
     }
 }

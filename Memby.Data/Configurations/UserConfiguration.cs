@@ -13,6 +13,9 @@ namespace Memby.Data.Configurations
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd();
 
+            entity.HasIndex(e => e.Uuid)
+                .IsUnique();
+
             entity.HasIndex(e => e.Email)
                 .IsUnique();
 

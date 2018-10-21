@@ -54,11 +54,11 @@ namespace Memby.Services.Companies
             company.UserId = userId;
             company.VatNumber = createCompanyDto.VatNumber;
 
-            if (await _userRolesRepository.GetAsync(filter: o => o.UserId == userId && o.RoleId == (int)Roles.LegalPerson) == null)
+            if (await _userRolesRepository.GetAsync(filter: o => o.UserId == userId && o.RoleId == (int)Roles.CompanyOwner) == null)
             {
                 var userRole = new UserRole()
                 {
-                    RoleId = (int)Roles.LegalPerson,
+                    RoleId = (int)Roles.CompanyOwner,
                     UserId = userId
                 };
 
@@ -100,6 +100,15 @@ namespace Memby.Services.Companies
             }
 
             await _companiesRepository.DeleteAsync(company);
+
+            if ((await _companiesRepository.ListAsync(filter: o => o.UserId == userId)).Count == 0)
+            {
+                var userRole = await _userRolesRepository.GetAsync(filter: o => o.UserId == userId && o.RoleId == (int)Roles.CompanyOwner);
+                if (userRole != null)
+                {
+                    await _userRolesRepository.DeleteAsync(userRole);
+                }
+            }
 
             return new DeleteCompanyResultDto();
         }

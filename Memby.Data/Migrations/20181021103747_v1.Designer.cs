@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Memby.Data.Migrations
 {
     [DbContext(typeof(MembyDbContext))]
-    [Migration("20181020183522_v1")]
+    [Migration("20181021103747_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,8 @@ namespace Memby.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
+
+                    b.Property<string>("BrandName");
 
                     b.Property<string>("Logo");
 
@@ -86,9 +88,14 @@ namespace Memby.Data.Migrations
 
                     b.Property<string>("Surname");
 
+                    b.Property<Guid>("Uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Uuid")
                         .IsUnique();
 
                     b.HasIndex("Email", "Password")

@@ -20,5 +20,7 @@ namespace Memby.Application.Users
         public string Name { get; set; }
 
         public string Surname { get; set; }
+
+        public Guid Uuid { get; set; }
     }
 }

@@ -33,8 +33,9 @@ namespace Memby.Services.Jwt
                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
                 identity.FindFirst("Id"),
-                identity.FindFirst(nameof(Roles.NaturalPerson)),
-                identity.FindFirst(nameof(Roles.LegalPerson)),
+                identity.FindFirst(nameof(Roles.RegularUser)),
+                identity.FindFirst(nameof(Roles.Employee)),
+                identity.FindFirst(nameof(Roles.CompanyOwner)),
                 identity.FindFirst(nameof(Roles.Admin))
              };
 
@@ -61,13 +62,17 @@ namespace Memby.Services.Jwt
 
             foreach (var userRole in user.UserRoles)
             {
-                if (userRole.RoleId == (int)Roles.NaturalPerson)
+                if (userRole.RoleId == (int)Roles.RegularUser)
                 {
-                    claimsIdentity.AddClaim(new Claim(nameof(Roles.NaturalPerson), "true"));
+                    claimsIdentity.AddClaim(new Claim(nameof(Roles.RegularUser), "true"));
                 }
-                else if (userRole.RoleId == (int)Roles.LegalPerson)
+                else if (userRole.RoleId == (int)Roles.Employee)
                 {
-                    claimsIdentity.AddClaim(new Claim(nameof(Roles.LegalPerson), "true"));
+                    claimsIdentity.AddClaim(new Claim(nameof(Roles.Employee), "true"));
+                }
+                else if (userRole.RoleId == (int)Roles.CompanyOwner)
+                {
+                    claimsIdentity.AddClaim(new Claim(nameof(Roles.CompanyOwner), "true"));
                 }
                 else if (userRole.RoleId == (int)Roles.Admin)
                 {

@@ -79,6 +79,24 @@ namespace Memby.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Darbuotojas neegizstuoja.
+        /// </summary>
+        public static string EmployeeDoesNotExist {
+            get {
+                return ResourceManager.GetString("EmployeeDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Negalima priskirti darbuotojo šiam vartotojui, kadangi jis neegzistuoja.
+        /// </summary>
+        public static string EmployeeUserDoesNotExist {
+            get {
+                return ResourceManager.GetString("EmployeeUserDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Neteisingi vartotojo prisijungimo duomenys.
         /// </summary>
         public static string LoginUserIncorrectCredentials {
@@ -111,6 +129,15 @@ namespace Memby.Core.Resources {
         public static string UserDoesNotExist {
             get {
                 return ResourceManager.GetString("UserDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Šis darbuotojas jau yra įtrauktas į jūsų įmonę..
+        /// </summary>
+        public static string UserEmployeeExistsForCompany {
+            get {
+                return ResourceManager.GetString("UserEmployeeExistsForCompany", resourceCulture);
             }
         }
     }

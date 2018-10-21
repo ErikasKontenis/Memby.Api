@@ -86,9 +86,14 @@ namespace Memby.Data.Migrations
 
                     b.Property<string>("Surname");
 
+                    b.Property<Guid>("Uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Uuid")
                         .IsUnique();
 
                     b.HasIndex("Email", "Password")

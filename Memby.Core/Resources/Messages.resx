@@ -123,6 +123,12 @@
   <data name="EmailExists" xml:space="preserve">
     <value>Šis vartotojo el. pašto adresas jau yra užimtas</value>
   </data>
+  <data name="EmployeeDoesNotExist" xml:space="preserve">
+    <value>Darbuotojas neegizstuoja</value>
+  </data>
+  <data name="EmployeeUserDoesNotExist" xml:space="preserve">
+    <value>Negalima priskirti darbuotojo šiam vartotojui, kadangi jis neegzistuoja</value>
+  </data>
   <data name="LoginUserIncorrectCredentials" xml:space="preserve">
     <value>Neteisingi vartotojo prisijungimo duomenys</value>
   </data>
@@ -134,5 +140,8 @@
   </data>
   <data name="UserDoesNotExist" xml:space="preserve">
     <value>Vartotojas neegizstuoja</value>
+  </data>
+  <data name="UserEmployeeExistsForCompany" xml:space="preserve">
+    <value>Šis darbuotojas jau yra įtrauktas į jūsų įmonę.</value>
   </data>
 </root>

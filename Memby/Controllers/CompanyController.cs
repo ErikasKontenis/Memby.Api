@@ -3,11 +3,12 @@ using Memby.Contracts.Services;
 using Memby.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Memby.WebApi.Controllers
 {
-    [Authorize(Policy = "LegalPerson")]
+    [Authorize]
     [Route("api/[controller]")]
     public class CompanyController : ApiControllerBase
     {
@@ -19,6 +20,7 @@ namespace Memby.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "CompanyOwner")]
         [Route("Get/{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -32,8 +34,23 @@ namespace Memby.WebApi.Controllers
             return Ok(companyDto);
         }
 
+        [HttpGet]
+        [Authorize(Policy = "CompanyOwner")]
+        [Route("List")]
+        public async Task<IActionResult> List()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ModelStateResult(ModelState));
+            }
+
+            throw new NotImplementedException();
+
+            return Ok();
+        }
+
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Policy = "RegularUser")]
         [Route("Create")]
         public async Task<IActionResult> Create(CreateCompanyDto item)
         {
@@ -48,6 +65,7 @@ namespace Memby.WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "CompanyOwner")]
         [Route("Update")]
         public async Task<IActionResult> Update(UpdateCompanyDto item)
         {
@@ -62,6 +80,7 @@ namespace Memby.WebApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Policy = "CompanyOwner")]
         [Route("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

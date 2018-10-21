@@ -6,6 +6,7 @@ using Memby.Data.Extensions;
 using Memby.Data.Repositories;
 using Memby.Middlewares;
 using Memby.Services.Companies;
+using Memby.Services.Employees;
 using Memby.Services.Jwt;
 using Memby.Services.Security;
 using Memby.Services.Users;
@@ -95,12 +96,14 @@ namespace Memby
             _container.Register(typeof(IUsersService), typeof(UsersService));
             _container.Register(typeof(ISecurityService), typeof(SecurityService));
             _container.Register(typeof(ICompaniesService), typeof(CompaniesService));
+            _container.Register(typeof(IEmployeesService), typeof(EmployeesService));
 
             // Automatically register generic repositories by contract
             _container.Register(typeof(IRepository<>), typeof(Repository<>));
             _container.Register(typeof(IUsersRepository), typeof(UsersRepository));
             _container.Register(typeof(IUserRolesRepository), typeof(UserRolesRepository));
             _container.Register(typeof(ICompaniesRepository), typeof(CompaniesRepository));
+            _container.Register(typeof(IEmployeesRepository), typeof(EmployeesRepository));
 
             _container.AutoCrossWireAspNetComponents(app);
             _container.Verify();
@@ -151,8 +154,9 @@ namespace Memby
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Admin", policy => policy.RequireClaim(nameof(Roles.Admin), "true"));
-                options.AddPolicy("LegalPerson", policy => policy.RequireClaim(nameof(Roles.LegalPerson), "true"));
-                options.AddPolicy("NaturalPerson", policy => policy.RequireClaim(nameof(Roles.NaturalPerson), "true"));
+                options.AddPolicy("CompanyOwner", policy => policy.RequireClaim(nameof(Roles.CompanyOwner), "true"));
+                options.AddPolicy("Employee", policy => policy.RequireClaim(nameof(Roles.Employee), "true"));
+                options.AddPolicy("RegularUser", policy => policy.RequireClaim(nameof(Roles.RegularUser), "true"));
             });
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
@@ -198,7 +202,7 @@ namespace Memby
             {
                 c.DescribeAllEnumsAsStrings();
                 c.SwaggerDoc("v1", new Info { Title = "Memby", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)], Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey" });
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)], Description = "Please enter JWT with Bearer into field. HINT: broken swagger does not recognize properly authentication type- as a result write: Bearer 'authToken'", Name = "Authorization", Type = "apiKey" });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
                 {
                     {
