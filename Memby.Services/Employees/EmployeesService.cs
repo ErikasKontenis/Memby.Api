@@ -130,6 +130,15 @@ namespace Memby.Services.Employees
 
             await _employeesRepository.DeleteAsync(employee);
 
+            if ((await _employeesRepository.ListAsync(filter: o => o.UserId == employee.UserId)).Count == 0)
+            {
+                var userRole = await _userRolesRepository.GetAsync(filter: o => o.UserId == employee.UserId && o.RoleId == (int)Roles.Employee);
+                if (userRole != null)
+                {
+                    await _userRolesRepository.DeleteAsync(userRole);
+                }
+            }
+
             return new DeleteEmployeeResultDto();
         }
     }
